@@ -1,0 +1,26 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker build --network=host -t registry2023.skyshi.io/chang-le/chatbot:$CI_COMMIT_SHA .
+    - docker push registry2023.skyshi.io/chang-le/chatbot:$CI_COMMIT_SHA
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  image: registry2023.skyshi.io/rancher-deploy:latest
+  variables:
+    STACK_NAME: chang-le
+    RANCHER_ACCESS_KEY: 7883945FF628446F34F6
+    RANCHER_ENVIRONMENT: staging
+    RANCHER_SECRET_KEY: HpMvXcp7ZmbrWEw9K1wazk6e2pbJ6TCT3wiLL37m
+    RANCHER_URL: https://rancher.skyshi.io/v1
+  script:
+    - ''
+
+  only:
+    - main

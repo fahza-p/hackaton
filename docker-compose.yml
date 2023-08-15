@@ -1,0 +1,18 @@
+version: '2'
+services:
+  chatbot:
+    image: registry2023.skyshi.io/chang-le/chatbot:$CI_COMMIT_SHA
+
+    command: sh -c "python app.py"
+    expose:
+      - 3000
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      APP_ENV: ${APP_ENV}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_PORT: ${APP_PORT}
+
+    labels:
+      - rap.host=chatbot-chang-le.project.skyshi.io
+      - rap.le_host=chatbot-chang-le.project.skyshi.io
+      - rap.port=3000
